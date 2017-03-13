@@ -1,0 +1,293 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.zeychen</groupId>
+  <artifactId>superparent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <description>superparent</description>
+  <properties>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <!-- 设定仓库 -->
+  <repositories>
+  	<repository>
+  		<id>offical</id>
+  		<name>Maven offical repo</name>
+  		<url>http://repo1.maven.org/maven2</url>
+  		<snapshots>
+  			<enabled>true</enabled>
+  		</snapshots>
+  	</repository>
+  	<repository>
+  		<id>ali maven</id>
+        <name>aliyun maven</name>
+       <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+  		<snapshots>
+  			<enabled>true</enabled>
+  		</snapshots>
+  	</repository>
+  </repositories>
+  
+  <!-- 插件仓库 -->
+  <pluginRepositories>
+  	<pluginRepository>
+  		<id>offical</id>
+  		<name>Maven offical repo</name>
+  		<url>http://repo1.maven.org/maven2</url>
+  		<snapshots>
+  			<enabled>true</enabled>
+  		</snapshots>
+  	</pluginRepository>
+  	<pluginRepository>
+  		<id>ali maven</id>
+        <name>aliyun maven</name>
+       <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+  		<snapshots>
+  			<enabled>true</enabled>
+  		</snapshots>
+  	</pluginRepository>
+  </pluginRepositories>
+  
+  <!-- 内部发布库|私服 -->
+  <distributionManagement>
+  	<repository>
+  		<uniqueVersion>false</uniqueVersion>
+  		<id>release</id>
+  		<layout>default</layout>
+  		<url></url>
+  	</repository>
+  	
+  	<snapshotRepository>
+  		<uniqueVersion>false</uniqueVersion>
+  		<id>snapshot</id>
+  		<layout>default</layout>
+  		<url></url>
+  	</snapshotRepository>
+  </distributionManagement>
+  
+  <build>
+  	<pluginManagement>
+  		<plugins>
+  		
+  			<!-- 清理插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-clean-plugin</artifactId>
+  				<version>2.5</version>
+  			</plugin>
+  			
+  			<!-- 编译插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-compiler-plugin</artifactId>
+  				<version>3.1</version>
+  				<configuration>
+  					<source>1.7</source>
+  					<target>1.7</target>
+  					<showWarnings>true</showWarnings>
+  				</configuration>
+  			</plugin>
+  			
+  			<!-- 资源处理插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-resources-plugin</artifactId>
+  				<version>2.6</version>
+  			</plugin>
+  			
+  			<!-- 依赖管理插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-dependency-plugin</artifactId>
+  				<version>2.2</version>
+  			</plugin>
+  			
+  			<!-- 集成构建插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-assembly-plugin</artifactId>
+  				<version>${jetty.version}</version>
+  				<configuration>
+  					<reload>manual</reload>
+  				</configuration>
+  			</plugin>
+  			<!-- jetty插件 -->
+  			<plugin>
+  				<groupId>org.moutbay.jetty</groupId>
+  				<artifactId>jetty-maven-plugin</artifactId>
+  				<version>2.2</version>
+  			</plugin>
+  			
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-antrun-plugin</artifactId>
+  				<version>1.6</version>
+  			</plugin>
+  			<!-- 单元测试插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-surefire-plugin</artifactId>
+  				<version>2.12.4</version>
+  				<configuration>
+  					<argLine>-Xmx256M</argLine>
+  					<includes>
+  						<include>**/*Test.java</include>
+  					</includes>
+  				</configuration>
+  			</plugin>
+  			
+  			<!-- eclipse插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-eclipse-plugin</artifactId>
+  				<version>2.8</version>
+  				<configuration>
+  					<downloadSources>true</downloadSources>
+  					<downloadJavadocs>false</downloadJavadocs>
+  				</configuration>
+  			</plugin>
+  			
+  			<!-- 单元测试覆盖路统计插件 -->
+  			<plugin>
+  				<groupId>org.codehaus.mojo</groupId>
+  				<artifactId>cobertura-maven-plugin</artifactId>
+  				<version>2.5</version>
+  			</plugin>
+  			
+  			<plugin>
+  				<groupId>org.codehaus.mojo</groupId>
+  				<artifactId>sonar-maven-plugin</artifactId>
+  				<version>2.0</version>
+  			</plugin>
+  			
+  			<!-- 本地部署插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-install-plugin</artifactId>
+  				<version>2.4</version>
+  			</plugin>
+  			
+  			<!-- 远程发布插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-deploy-plugin</artifactId>
+  				<version>2.7</version>
+  			</plugin>
+  			<!--  -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-release-plugin</artifactId>
+  				<version>2.1</version>
+  			</plugin>
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-scm-plugin</artifactId>
+  				<version>1.5</version>
+  			</plugin>
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-shade-plugin</artifactId>
+  				<version>2.4.3</version>
+  			</plugin>
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-jxr-plugin</artifactId>
+  				<version>2.2</version>
+  			</plugin>
+  			
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-help-plugin</artifactId>
+  				<version>2.2</version>
+  			</plugin>
+  			
+  			
+  			
+  			
+  			
+  			<!-- 站点部署插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-site-plugin</artifactId>
+  				<version>3.3</version>
+  			</plugin>
+  			
+  			<!-- war打包插件 -->
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-war-plugin</artifactId>
+  				<version>2.2</version>
+  				<configuration>
+  					<warName>${project.artifactId}</warName>
+  				</configuration>
+  			</plugin>
+  			
+  			<plugin>
+  				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+				<version>1.0.0</version>  
+				<configuration>
+					<lifecycleMappingMetadata>
+						<pluginExecutions>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>org.codehaus.mojo</groupId>
+									<artifactId>build-helper-maven-plugin</artifactId>
+									<versionRange>[1.6,)</versionRange>
+									<goals>
+										<goal>add-source</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore></ignore>
+								</action>
+							</pluginExecution>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>org.codehaus.mojo</groupId>
+									<artifactId>exec-maven-plugin</artifactId>
+									<versionRange>[1.2.1,)</versionRange>
+									<goals>
+										<goal>java</goal>
+										<goal>exec</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore></ignore>
+								</action>
+							</pluginExecution>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>org.apache.maven.plugins</groupId>
+									<artifactId>maven-dependency-plugin</artifactId>
+									<versionRange>[1.0.0,)</versionRange>
+									<goals>
+										<goal>unpack</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore></ignore>
+								</action>
+							</pluginExecution>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>org.apache.maven.plugins</groupId>
+									<artifactId>maven-antrun-plugin</artifactId>
+									<versionRange>[1.0.0,)</versionRange>
+									<goals>
+										<goal>run</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore></ignore>
+								</action>
+							</pluginExecution>
+						</pluginExecutions>
+					</lifecycleMappingMetadata>
+				</configuration>			
+  			</plugin>
+  			
+  		</plugins>
+  	</pluginManagement>
+  </build>
+</project>
